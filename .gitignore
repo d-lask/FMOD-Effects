@@ -42,3 +42,9 @@
 
 # Xcode files
 **/xcuserdata/**
+
+# Visual Studio files
+*.vs
+**/x64/**
+*.filters
+*.user
