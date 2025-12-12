@@ -6,7 +6,7 @@ float sinWave(float freq, float t) {
 }
 
 float squareWave(float freq, float t) {
-    float val = sinWave(freq, t);
+    const float val = sinWave(freq, t);
     if(val >= 0.0f) {
         return 1.0f;
     } else {
@@ -15,7 +15,8 @@ float squareWave(float freq, float t) {
 }
 
 float triangleWave(float freq, float t) {
-    return asinf(cosf(t)) / M_PI_2;
+    const float floorval = floor(t + 0.5f);
+    return (4.0f * abs(t - floorval)) - 1.0f;
 }
 
 float sawWave(float freq, float t) {
