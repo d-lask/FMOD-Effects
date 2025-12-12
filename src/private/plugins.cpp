@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include "common.h"
+#include <math.h>
 
 enum
 {
@@ -99,26 +100,6 @@ FMOD_RESULT FMOD_BitCrusher_dspreset(FMOD_DSP_STATE *dsp_state) {
     return FMOD_OK;
 }
 
-float generate_sin_wave(float offset)
-{
-    return 0.0f;
-}
-
-float generate_square_wave(float offset)
-{
-    return 0.0f;
-}
-
-float generate_triangle_wave(float offset)
-{
-    return 0.0f;
-}
-
-float generate_sawtooth_wave(float offset)
-{
-    return 0.0f;
-}
-
 FMOD_RESULT FMOD_BitCrusher_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, float *outbuffer, unsigned int length, int inchannels, int *outchannels) {
     
     const int TOTAL_SIZE = length * inchannels;
@@ -130,13 +111,37 @@ FMOD_RESULT FMOD_BitCrusher_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, 
         return FMOD_OK;
     }
     
+    
+    int sampleRate;
+    dsp_state->functions->getsamplerate(dsp_state, &sampleRate);
+    
+    // assign the wave function based on user preference
+    wave_func_ptr waveFunc = sinWave; //default to sin wave
+    switch(state->wave_type)
+    {
+        case FMOD_RINGMOD_WAVETYPE_SIN: break;
+        case FMOD_RINGMOD_WAVETYPE_SQAURE: waveFunc = squareWave; break;
+        case FMOD_RINGMOD_WAVETYPE_TRIANGLE: waveFunc = triangleWave; break;
+        case FMOD_RINGMOD_WAVETYPE_SAWTOOTH: waveFunc = sawWave; break;
+        default: break;
+    }
+    
+    float increment = state->wave_frequency / (float)sampleRate;
+    
     for(int b = 0; b < length; b++)
     {
+        float modulator = waveFunc(state->wave_frequency, state->wave_offset);
         
         for(int c = 0; c < inchannels; c++)
         {
+            float inputValue = *inbuffer;
+            *outbuffer = modulator;
             
+            inbuffer++;
+            outbuffer++;
         }
+        
+        state->wave_offset = fmod(state->wave_offset + increment, 360.0f);
     }
     
     return FMOD_OK;
