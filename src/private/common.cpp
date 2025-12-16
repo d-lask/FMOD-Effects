@@ -20,6 +20,5 @@ float triangleWave(float freq, float t) {
 }
 
 float sawWave(float freq, float t) {
-    // todo: figure out how to do this
-    return 0.0f;
+     return (2.0f * (t - floorf(t))) - 1.0f;
 }
