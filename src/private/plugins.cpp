@@ -47,7 +47,7 @@ FMOD_DSP_PARAMETER_DESC *ringmod_params[FMOD_RINGMOD_PARAM_COUNT]
 };
 
 DECLARE_FMOD_DESCRIPTION_FUNCS(BitCrusher);
-DECLARE_FMOD_DESCRIPTION(BitCrusher, "Lasko_BitCrusher", 0x00001000, FMOD_RINGMOD_PARAM_COUNT, ringmod_params);
+DECLARE_FMOD_DESCRIPTION(BitCrusher, "Lasko_RingModulator", 0x00001000, FMOD_RINGMOD_PARAM_COUNT, ringmod_params);
 
 const float FMOD_RINGMOD_WAVEFREQ_MIN = 1.0f;
 const float FMOD_RINGMOD_WAVEFREQ_MAX = 1000.0f;
@@ -57,7 +57,7 @@ FMOD_DSP_DESCRIPTION *FMODGetDSPDescription() {
     
     static const char *wave_shape_names[4] =
     {
-        "sin", "square", "triangle", "sawtooth"
+        "sin", "square", "triangle", "saw"
     };
     
     FMOD_DSP_INIT_PARAMDESC_FLOAT(p_ringmod_enabled, "Enabled", "", "Is the ringmod effect enabled", 0.0f, 1.0f, 1.0f);
@@ -135,7 +135,7 @@ FMOD_RESULT FMOD_BitCrusher_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, 
         for(int c = 0; c < inchannels; c++)
         {
             float inputValue = *inbuffer;
-            *outbuffer = modulator;
+            *outbuffer = inputValue * modulator;
             
             inbuffer++;
             outbuffer++;
