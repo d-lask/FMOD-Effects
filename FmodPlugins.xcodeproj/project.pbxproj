@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB5648F12EE743C300C0EE1E /* plugins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB5648F02EE743C200C0EE1E /* plugins.cpp */; };
+		CB5648F12EE743C300C0EE1E /* ring_modulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB5648F02EE743C200C0EE1E /* ring_modulator.cpp */; };
 		CB5648F52EE743CC00C0EE1E /* plugins.hpp in Headers */ = {isa = PBXBuildFile; fileRef = CB5648F32EE743CC00C0EE1E /* plugins.hpp */; };
 		CB5648F62EE743CC00C0EE1E /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = CB5648F42EE743CC00C0EE1E /* common.h */; };
 		CB5648F82EE8C47A00C0EE1E /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CB5648F72EE8C47A00C0EE1E /* common.cpp */; };
@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB5648F02EE743C200C0EE1E /* plugins.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plugins.cpp; sourceTree = "<group>"; };
+		CB5648F02EE743C200C0EE1E /* ring_modulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ring_modulator.cpp; sourceTree = "<group>"; };
 		CB5648F32EE743CC00C0EE1E /* plugins.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = plugins.hpp; sourceTree = "<group>"; };
 		CB5648F42EE743CC00C0EE1E /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		CB5648F72EE8C47A00C0EE1E /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
@@ -37,7 +37,7 @@
 		CB5648EF2EE743C200C0EE1E /* private */ = {
 			isa = PBXGroup;
 			children = (
-				CB5648F02EE743C200C0EE1E /* plugins.cpp */,
+				CB5648F02EE743C200C0EE1E /* ring_modulator.cpp */,
 				CB5648F72EE8C47A00C0EE1E /* common.cpp */,
 			);
 			name = private;
@@ -143,7 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB5648F82EE8C47A00C0EE1E /* common.cpp in Sources */,
-				CB5648F12EE743C300C0EE1E /* plugins.cpp in Sources */,
+				CB5648F12EE743C300C0EE1E /* ring_modulator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

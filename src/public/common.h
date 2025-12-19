@@ -51,7 +51,9 @@
         0                                                                               \
     }
 
-#endif /* common_h */
+#define DECLARE_PLUGIN_BINDINGS(name)                       \
+    extern FMOD_DSP_DESCRIPTION FMOD_## name ##_Desc;       \
+    extern void name##_PluginInit();
 
 typedef float (*wave_func_ptr)(float, float);
 
@@ -59,3 +61,5 @@ float sinWave(float freq, float t);
 float squareWave(float freq, float t);
 float triangleWave(float freq, float t);
 float sawWave(float freq, float t);
+
+#endif /* common_h */

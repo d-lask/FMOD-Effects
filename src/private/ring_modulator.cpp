@@ -46,14 +46,14 @@ FMOD_DSP_PARAMETER_DESC *ringmod_params[FMOD_RINGMOD_PARAM_COUNT]
     &p_ringmod_wavefreq
 };
 
-DECLARE_FMOD_DESCRIPTION_FUNCS(BitCrusher);
-DECLARE_FMOD_DESCRIPTION(BitCrusher, "Lasko_RingModulator", 0x00001000, FMOD_RINGMOD_PARAM_COUNT, ringmod_params);
+DECLARE_FMOD_DESCRIPTION_FUNCS(RingModulator);
+DECLARE_FMOD_DESCRIPTION(RingModulator, "FmodEffects_RingModulator", 0x00001000, FMOD_RINGMOD_PARAM_COUNT, ringmod_params);
 
 const float FMOD_RINGMOD_WAVEFREQ_MIN = 1.0f;
 const float FMOD_RINGMOD_WAVEFREQ_MAX = 1000.0f;
 const float FMOD_RINGMOD_WAVEFREQ_DEFAULT = 400.0f;
 
-FMOD_DSP_DESCRIPTION *FMODGetDSPDescription() {
+void RingModulator_PluginInit() {
     
     static const char *wave_shape_names[4] =
     {
@@ -63,7 +63,6 @@ FMOD_DSP_DESCRIPTION *FMODGetDSPDescription() {
     FMOD_DSP_INIT_PARAMDESC_FLOAT(p_ringmod_enabled, "Enabled", "", "Is the ringmod effect enabled", 0.0f, 1.0f, 1.0f);
     FMOD_DSP_INIT_PARAMDESC_INT(p_ringmod_wavetype, "Wave Type", "", "Shape of modulating wave", FMOD_RINGMOD_WAVETYPE_SIN, FMOD_RINGMOD_WAVETYPE_SAWTOOTH, FMOD_RINGMOD_WAVETYPE_SIN, false, wave_shape_names);
     FMOD_DSP_INIT_PARAMDESC_FLOAT(p_ringmod_wavefreq, "Wave Freq", "hz", "Frequency of modulating wave", FMOD_RINGMOD_WAVEFREQ_MIN, FMOD_RINGMOD_WAVEFREQ_MAX, FMOD_RINGMOD_WAVEFREQ_DEFAULT);
-    return &FMOD_BitCrusher_Desc;
 }
 
 class FMODRingModState
@@ -77,7 +76,7 @@ public:
     float wave_offset = 0.0f;
 };
 
-FMOD_RESULT FMOD_BitCrusher_dspcreate(FMOD_DSP_STATE *dsp_state) {
+FMOD_RESULT FMOD_RingModulator_dspcreate(FMOD_DSP_STATE *dsp_state) {
     
     FMODRingModState* state = (FMODRingModState *)FMOD_DSP_ALLOC(dsp_state, sizeof(FMODRingModState));
     dsp_state->plugindata = state;
@@ -89,18 +88,18 @@ FMOD_RESULT FMOD_BitCrusher_dspcreate(FMOD_DSP_STATE *dsp_state) {
     return FMOD_OK;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dsprelease(FMOD_DSP_STATE *dsp_state) {
+FMOD_RESULT FMOD_RingModulator_dsprelease(FMOD_DSP_STATE *dsp_state) {
     
     FMODRingModState *state = (FMODRingModState *)dsp_state->plugindata;
     FMOD_DSP_FREE(dsp_state, state);
     return FMOD_OK;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspreset(FMOD_DSP_STATE *dsp_state) {
+FMOD_RESULT FMOD_RingModulator_dspreset(FMOD_DSP_STATE *dsp_state) {
     return FMOD_OK;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, float *outbuffer, unsigned int length, int inchannels, int *outchannels) {
+FMOD_RESULT FMOD_RingModulator_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, float *outbuffer, unsigned int length, int inchannels, int *outchannels) {
     
     const int TOTAL_SIZE = length * inchannels;
     
@@ -147,7 +146,7 @@ FMOD_RESULT FMOD_BitCrusher_dspread(FMOD_DSP_STATE *dsp_state, float *inbuffer, 
     return FMOD_OK;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspsetparamfloat(FMOD_DSP_STATE *dsp_state, int index, float value) {
+FMOD_RESULT FMOD_RingModulator_dspsetparamfloat(FMOD_DSP_STATE *dsp_state, int index, float value) {
     FMODRingModState *state = (FMODRingModState *)dsp_state->plugindata;
     
     switch (index)
@@ -167,7 +166,7 @@ FMOD_RESULT FMOD_BitCrusher_dspsetparamfloat(FMOD_DSP_STATE *dsp_state, int inde
     return FMOD_ERR_INVALID_PARAM;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspgetparamfloat(FMOD_DSP_STATE *dsp_state, int index, float *value, char *valuestr) {
+FMOD_RESULT FMOD_RingModulator_dspgetparamfloat(FMOD_DSP_STATE *dsp_state, int index, float *value, char *valuestr) {
     FMODRingModState *state = (FMODRingModState *)dsp_state->plugindata;
     
     switch (index)
@@ -187,7 +186,7 @@ FMOD_RESULT FMOD_BitCrusher_dspgetparamfloat(FMOD_DSP_STATE *dsp_state, int inde
     return FMOD_ERR_INVALID_PARAM;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspsetparamint(FMOD_DSP_STATE *dsp_state, int index, int value) {
+FMOD_RESULT FMOD_RingModulator_dspsetparamint(FMOD_DSP_STATE *dsp_state, int index, int value) {
     FMODRingModState *state = (FMODRingModState *)dsp_state->plugindata;
     
     switch (index)
@@ -202,7 +201,7 @@ FMOD_RESULT FMOD_BitCrusher_dspsetparamint(FMOD_DSP_STATE *dsp_state, int index,
     return FMOD_ERR_INVALID_PARAM;
 }
 
-FMOD_RESULT FMOD_BitCrusher_dspgetparamint(FMOD_DSP_STATE *dsp_state, int index, int *value, char *valuestr) {
+FMOD_RESULT FMOD_RingModulator_dspgetparamint(FMOD_DSP_STATE *dsp_state, int index, int *value, char *valuestr) {
     FMODRingModState *state = (FMODRingModState *)dsp_state->plugindata;
     
     switch (index)
@@ -217,7 +216,7 @@ FMOD_RESULT FMOD_BitCrusher_dspgetparamint(FMOD_DSP_STATE *dsp_state, int index,
     return FMOD_ERR_INVALID_PARAM;
 }
 
-FMOD_RESULT FMOD_BitCrusher_shouldiprocess(FMOD_DSP_STATE *dsp_state, FMOD_BOOL inputsidle, unsigned int length, FMOD_CHANNELMASK inmask, int inchannels, FMOD_SPEAKERMODE speakermode) {
+FMOD_RESULT FMOD_RingModulator_shouldiprocess(FMOD_DSP_STATE *dsp_state, FMOD_BOOL inputsidle, unsigned int length, FMOD_CHANNELMASK inmask, int inchannels, FMOD_SPEAKERMODE speakermode) {
     
     if (inputsidle)
     {
